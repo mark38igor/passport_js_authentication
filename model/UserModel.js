@@ -31,7 +31,19 @@ let getInfo = (email) => {
   });
 };
 
+let getPassword = (email) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let sql = `SELECT password from login where email=? `;
+      let result = await db.execute(sql, [email]);
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 module.exports = {
   createUser,
   getInfo,
+  getPassword,
 };

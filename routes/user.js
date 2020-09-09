@@ -10,4 +10,12 @@ userRouter.get("/:flag?/create", (req, res, next) => {
   }
 });
 
+userRouter.get("/signup", (req, res, next) => {
+  res.render("signup.ejs");
+});
+
+userRouter.get("/signin", (req, res, next) => {
+  res.render("signin.ejs");
+});
+
 module.exports = userRouter;
