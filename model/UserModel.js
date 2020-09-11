@@ -30,6 +30,18 @@ let getInfo = (email) => {
     }
   });
 };
+// get user info by id
+let getInfoById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let sql = `SELECT name,email,id from login where id=? `;
+      let result = await db.execute(sql, [id]);
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
 let getPassword = (email) => {
   return new Promise(async (resolve, reject) => {
@@ -42,8 +54,10 @@ let getPassword = (email) => {
     }
   });
 };
+
 module.exports = {
   createUser,
   getInfo,
   getPassword,
+  getInfoById,
 };

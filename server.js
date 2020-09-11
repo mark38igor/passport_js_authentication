@@ -15,13 +15,32 @@ app.use(bodyParser.json());
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// For passport
+const session = require("express-session");
+
+const passport = require("passport");
+
+app.use(
+  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+const flash = require("connect-flash");
+app.use(flash());
+require("./utiils/passportLocal")(passport);
+
 // Define Routes
 
 // Test db connectivity working by creating a  User
-const userRouter = require("./routes/user");
+const userRouter = require("./routes/user"); 
 app.use("/user", userRouter);
 
 app.use("/", userRouter);
+
+// handle any routes with a 404 page
+app.use("*", (req, res, next) => {
+  res.render("404.ejs");
+});
 
 //Handle errors
 const errorHandler = require("./utiils/errorhandler");
